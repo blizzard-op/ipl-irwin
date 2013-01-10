@@ -6,6 +6,7 @@ import (
 )
 
 var adProviders = make(map[string]func(string) AdProvider)
+var debugMode = false
 
 type AdProvider interface {
 	RunAd()
@@ -21,4 +22,8 @@ func AdRequester(w http.ResponseWriter, r *http.Request) {
 
 func RegisterProvider(name string, gen func(string) AdProvider) {
 	adProviders[name] = gen
+}
+
+func SetDebugMode(on bool) {
+	debugMode = on
 }

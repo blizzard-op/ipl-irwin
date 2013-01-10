@@ -446,6 +446,10 @@ window.require.register("models/ads/ign-ad-provider", function(exports, require,
     };
 
     IgnAdProvider.prototype.runAd = function() {
+      $.ajax({
+        url: '/irwin/v1/run-ad-on/ign/for/' + this.getId(),
+        type: 'POST'
+      });
       console.log("ran IGN ad");
       return IgnAdProvider.__super__.runAd.apply(this, arguments);
     };
@@ -487,7 +491,7 @@ window.require.register("models/ads/twitch-ad-provider", function(exports, requi
 
     TwitchAdProvider.prototype.runAd = function() {
       $.ajax({
-        url: 'http://test.ign.com:9406/irwin/v1/run-ad-on/twitch/for/' + this.getId(),
+        url: '/irwin/v1/run-ad-on/twitch/for/' + this.getId(),
         type: 'POST'
       });
       console.log('twitch request made');
