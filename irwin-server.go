@@ -8,6 +8,7 @@ import (
 	"github.com/ign/ipl-irwin/health"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 const (
@@ -16,8 +17,8 @@ const (
 
 func main() {
 
-	var port int
-	flag.IntVar(&port, "port", 80, "Default port is 80")
+	var portNumber int
+	flag.IntVar(&portNumber, "port", 80, "Default port is 80")
 	flag.Parse()
 
 	// Routes to serve front-end assets
@@ -35,9 +36,10 @@ func main() {
 	r.PathPrefix(V1_PREFIX).HandlerFunc(index)
 
 	http.Handle("/", r)
+	port := strconv.FormatInt(int64(portNumber), 10)
 	fmt.Println("IRWIn Server starting")
-	if err := http.ListenAndServe(":"+string(port), nil); err != nil {
-		log.Fatalf("Could not start on port "+string(port), err)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
+		log.Fatalf("Could not start on port "+port, err)
 	}
 }
 
