@@ -18,6 +18,8 @@ const (
 func main() {
 
 	var portNumber int
+	var debug bool
+	flag.BoolVar(&debug, "debug", false, "Debug")
 	flag.IntVar(&portNumber, "port", 80, "Default port is 80")
 	flag.Parse()
 
@@ -38,6 +40,10 @@ func main() {
 	http.Handle("/", r)
 	port := strconv.FormatInt(int64(portNumber), 10)
 	fmt.Println("IRWIn Server starting")
+	if debug {
+		fmt.Println("Running in debug mode")
+		ads.SetDebugMode(debug)
+	}
 	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		log.Fatalf("Could not start on port "+port, err)
 	}
