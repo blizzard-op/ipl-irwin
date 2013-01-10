@@ -7,7 +7,7 @@ module.exports = class TwitchAdProvider extends AdProvider
 		@set 'provider', ProviderFinder.find('twitch', @get 'stream')
 	runAd: =>
 		$.ajax
-			url: 'http://test.ign.com:9406/irwin/v1/run-ad-on/twitch/for/' + @getId()
+			url: '/irwin/v1/run-ad-on/twitch/for/' + @getId()
 			type: 'POST'
 		console.log 'twitch request made'
 		super
