@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/ign/ipl-irwin/ads"
@@ -10,12 +11,14 @@ import (
 )
 
 const (
-	SERVER_PORT = ":9406"
-	V1_PREFIX   = "/irwin/v1"
+	V1_PREFIX = "/irwin/v1"
 )
 
 func main() {
-	fmt.Println("IRWIn Server starting")
+
+	var port int
+	flag.IntVar(&port, "port", 80, "Default port is 80")
+	flag.Parse()
 
 	// Routes to serve front-end assets
 	r := mux.NewRouter()
@@ -32,9 +35,9 @@ func main() {
 	r.PathPrefix(V1_PREFIX).HandlerFunc(index)
 
 	http.Handle("/", r)
-
-	if err := http.ListenAndServe(SERVER_PORT, nil); err != nil {
-		log.Fatalf("Could not start on port "+SERVER_PORT, err)
+	fmt.Println("IRWIn Server starting")
+	if err := http.ListenAndServe(":"+string(port), nil); err != nil {
+		log.Fatalf("Could not start on port "+string(port), err)
 	}
 }
 
