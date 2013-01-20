@@ -15,7 +15,6 @@ func (this *TwitchRequest) RunAd() {
 		log.Println("Error posting to Twitch, status: " + err.Error())
 		return
 	}
-
 	resp.Body.Close()
 	log.Println("Fired a Twitch Ad")
 }
